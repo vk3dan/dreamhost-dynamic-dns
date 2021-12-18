@@ -4,7 +4,6 @@ import urllib.parse
 import urllib.request
 import sys
 import os.path
-from requests import get
 from datetime import datetime
 
 if not os.path.isfile("config.py"):
@@ -47,7 +46,8 @@ def replace_record(hostname, ip):
     else:
         return False
 
-myip = get('https://api.ipify.org').content.decode('utf8')
+myip = urllib.request.urlopen('https://api.ipify.org')
+myip = myip.read().decode('utf8')
 print(f'[{datetime.now()}] Public IP address is: {myip}')
 
 if replace_record(hostname, myip):
