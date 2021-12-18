@@ -32,7 +32,7 @@ def replace_record(hostname, ip):
             if record == hostname and editable == '1':
                 print(f'[{datetime.now()}] Current Record: {hostname} | {type} | {value}')
                 if value != ip:
-                    print(f'[{datetime.now()}] Adding record {hostname} | A | {ip}')
+                    print(f'[{datetime.now()}] Removing record {hostname} | A | {ip}')
                     call('dns-remove_record', record=hostname, type=type, value=value)
                 else:
                     return False
