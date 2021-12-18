@@ -48,7 +48,7 @@ def replace_record(hostname, ip):
 
 myip = urllib.request.urlopen('https://api.ipify.org')
 myip = myip.read().decode('utf8')
-print(f'[{datetime.now()}] Public IP address is: {myip}')
+print(f'\n[{datetime.now()}] Public IP address is: {myip}')
 
 if replace_record(hostname, myip):
     print (f'[{datetime.now()}] Done: {hostname} set to {myip}')
