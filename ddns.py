@@ -24,17 +24,17 @@ def call(cmd, **args):
     return result[0], result[1:]
 
 def replace_record(hostname, ip):
-    '''Replace DH DNS records'''
+    '''Replace Dreamhost DNS records'''
     # find existing records
     status, response = call('dns-list_records')
     if status == 'success':
         for account_id, zone, record, type, value, comment, editable in (r.split('\t') for r in response[1:]):
-            if record == hostname and editable == '1':
+            if record == hostname and editable == '1': # record exists of your hostname and isn't locked
                 print(f'[{datetime.now()}] Current Record: {hostname} | {type} | {value}')
-                if value != ip:
+                if value != ip: # ip address is out of date, remove the old so we can add the new
                     print(f'[{datetime.now()}] Removing record {hostname} | A | {ip}')
                     call('dns-remove_record', record=hostname, type=type, value=value)
-                else:
+                else: # record is up to date, nothing needed.
                     return False
     else:
         sys.exit(f'[{datetime.now()}] Exiting: Failed to retrieve list from Dreamhost API')
@@ -46,11 +46,11 @@ def replace_record(hostname, ip):
     else:
         return False
 
-myip = urllib.request.urlopen('https://api.ipify.org')
-myip = myip.read().decode('utf8')
+lookupip = urllib.request.urlopen('https://api.ipify.org') # returns external ip address so works behind NAT
+myip = str(lookupip.read().decode('utf8'))
 print(f'\n[{datetime.now()}] Public IP address is: {myip}')
 
 if replace_record(hostname, myip):
-    print (f'[{datetime.now()}] Done: {hostname} set to {myip}')
+    print (f'[{datetime.now()}] Done: {hostname} set to {myip}') # great success
 else:
-    print (f'[{datetime.now()}] Exiting: No change needed') # didn't need to be changed
+    print (f'[{datetime.now()}] Exiting: No change needed') # record was up to date so didn't need to be changed
