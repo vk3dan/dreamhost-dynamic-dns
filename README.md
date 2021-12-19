@@ -15,4 +15,4 @@ example log output:
 [2021-12-19 00:00:07.487395] Exiting: No change needed
 ```
 
-This tool is based on [@ianloic's](https://github.com/ianloic) [dreamhost-ddns](https://github.com/ianloic/dreamhost-ddns) server-side CGI script for updating via dyndns tools, but without that functionality, updated for python 3 and customised the way I want it.
+This tool is based on [@ianloic's](https://github.com/ianloic) [dreamhost-ddns](https://github.com/ianloic/dreamhost-ddns) server-side CGI script for updating via dyndns tools, but without that functionality, updated for python 3 and customised the way I want it, with various small improvements.
